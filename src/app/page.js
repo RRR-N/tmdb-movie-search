@@ -1,11 +1,11 @@
 'use client';
 
-// app/page.js
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { searchMovies } from '../lib/tmdb';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { ModeToggle } from '@/components/ModeToggle';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -19,22 +19,21 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-4xl font-bold mb-4">TMDB Movie Search</h1>
+      <ModeToggle />
+      <h1 className="text-4xl font-bold mb-4">TMDB 映画検索</h1>
       <form onSubmit={handleSearch} className="mb-4">
         <Input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for a movie"
-          className="mb-2 p-2 border border-gray-300 rounded"
+          placeholder="タイトルを入力"
+          className="mb-4"
         />
-        <Button type="submit" className="p-2 bg-blue-500 text-white rounded">
-          Search
-        </Button>
+        <Button type="submit">検索</Button>
       </form>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {movies.map((movie) => (
-          <Card key={movie.id} className="mb-4 p-4 border border-gray-200 rounded">
+          <Card key={movie.id}>
             {movie.poster_path && (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
